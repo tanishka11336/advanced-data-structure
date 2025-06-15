@@ -1,0 +1,77 @@
+#include<iostream>
+using namespace std;
+#define n 10
+int i;
+int key[n];
+int value;
+class heap{
+    public:
+    int count=0;
+
+    void accept();
+    void build(int value,int i,int key[]);
+    void insert(int nkey,int count,int key[]);
+    void display();
+};
+void heap::accept(){
+    for(int i=1;i<=n;i++){
+        cin>>value;
+        build(value,i,key);
+        count++;
+    }
+}
+
+void heap::build(int value,int i,int key[]){
+    int m=1;
+      key[m]=value;
+      int loc=i;
+      int parent=0;
+      while(loc>1){
+        parent=i%2;
+        if(key[parent]<key[loc]){
+            int temp=key[parent];
+            key[parent]=key[loc];
+            key[loc]=temp;
+        }
+        else{
+            return;
+        }
+      }
+}
+void heap::display(){
+    for(int i=1;i<=n;i++){
+        cout<<key[i]<<"\t";
+    }
+}
+void heap::insert(int nkey,int count,int key[]){
+
+    cout<<"enter the key to insert in the array";
+    cin>>nkey;
+    key[count]=nkey;
+    int par=0;
+    while(count > 1){
+        par=count%2;
+        if(key[count] > key[par]){
+            int temp=key[count];
+            key[count]=key[par];
+            key[par]=temp;
+        }
+    }
+    count++;
+}
+int main(){
+    heap h;
+    int ch;
+    cout<<"1.accept the keys\n2.build a tree\n3.display the tree\n4.insert one element in the key array\n";
+    cin>>ch;
+    switch(ch){
+        case 1:h.accept();
+        break;
+        case 2:h.build(value,i,key);
+        break;
+        case 3:h.display();
+        break;
+        case 4:h.insert(value,i,key);
+        break;
+    }
+}
