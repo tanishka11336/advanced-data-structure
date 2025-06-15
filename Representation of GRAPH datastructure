@@ -1,0 +1,136 @@
+#include <iostream>
+using namespace std;
+
+class GR
+{
+public:
+    int i, j, n, v;
+    string city[10];
+    int arr[100][100];
+    string city_l;
+    int fuel;
+    GR *next;
+    void accept_m();
+    void display_m();
+    void accept_l();
+    void edges();
+    void display_l();
+} *head[20];
+
+void GR::accept_m()
+{
+    cout << "Enter number of cities: ";
+    cin >> n;
+    cout << "Enter names of cities: ";
+    for (i = 0; i < n; i++)
+    {
+        cin >> city[i];
+    }
+
+    for (i = 0; i < n; i++)
+    {
+        for (j = i+1; j < n; j++)
+        {
+            if (i == j)
+            {
+                arr[i][j] = 0;
+            }
+            else
+            {
+                cout << "Fuel required from " << city[i] << " to " << city[j] << ": ";
+                cin >> arr[i][j];
+            }
+        }
+    }
+}
+
+void GR::display_m()
+{
+    cout << "\nAdjacency Matrix:\n";
+    for (i = 0; i < n; i++)
+    {
+        cout << "\t" << city[i];
+    }
+    cout << endl;
+    for (i = 0; i < n; i++)
+    {
+        cout << city[i];
+        for (j = 0; j < n; j++)
+        {
+            cout << "\t" << arr[i][j];
+        }
+        cout << endl;
+    }
+}
+
+void GR::accept_l()
+{
+    cout << "Enter number of cities: ";
+    cin >> v;
+    cout << "Enter city names: ";
+    for (i = 0; i < v; i++)
+    {
+        head[i] = new GR;
+        cin >> head[i]->city_l;
+        head[i]->next = NULL;
+    }
+}
+
+void GR::edges()
+{
+    int e;
+    string s, d;
+    cout << "Enter number of edges: ";
+    cin >> e;
+
+    for (i = 0; i < e; i++)
+    {
+        cout << "Enter source and destination: ";
+        cin >> s >> d;
+        for (j = 0; j < v; j++)
+        {
+            if (head[j]->city_l == s)
+            {
+              break;
+            }
+        }
+
+        GR *n1 = new GR;
+        n1->city_l = d;
+        cout << "Enter fuel required: ";
+        cin >> n1->fuel;
+        n1->next = NULL;
+        GR *temp = head[j];
+        while (temp->next != NULL)
+        {
+            temp = temp->next;
+        }
+        temp->next = n1;
+    }
+}
+
+void GR::display_l()
+{
+    cout << "\nAdjacency List:\n";
+    for (i = 0; i < v; i++)
+    {
+        cout << head[i]->city_l;
+        GR *temp = head[i]->next;
+        while (temp != NULL)
+        {
+            cout << " -> " << temp->city_l << " (" << temp->fuel << ")"<<"->"<<"\n";
+            temp = temp->next;
+        }
+        cout << "NULL"<<endl;
+    }
+}
+
+int main()
+{
+    GR g;
+
+    g.accept_l();
+    g.edges();
+    g.display_l();
+    return 0;
+}
